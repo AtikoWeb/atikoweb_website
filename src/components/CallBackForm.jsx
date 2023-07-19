@@ -111,6 +111,7 @@ export default function CallBackForm({ open = false, onClose }) {
 									<button
 										type='submit'
 										className='btn btn-primary text-[15px] normal-case btn-wide font-bold'
+										onClick={handleSubmit}
 									>
 										Хочу попробовать
 									</button>
