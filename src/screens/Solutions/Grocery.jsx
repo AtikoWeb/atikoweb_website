@@ -6,8 +6,8 @@ import Tarif from '../../components/Tarif';
 
 function Grocery() {
 	const tarifs = [
-		{ title: 'Помесячный', price: 7500, qtyMonths: 'месяц' },
-		{ title: 'Годовой', price: 65000, qtyMonths: '12 месяцев' },
+		{ title: 'Продуктовый.Помесячный', price: 7500, qtyMonths: 'месяц' },
+		{ title: 'Продуктовый.Годовой', price: 65000, qtyMonths: '12 месяцев' },
 	];
 
 	return (

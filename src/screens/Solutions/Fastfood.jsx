@@ -2,8 +2,14 @@ import React from 'react';
 import Hero from '../../components/Hero';
 import VideoCard from '../../components/VideoCard';
 import PhotoCard from '../../components/PhotoCard';
+import Tarif from '../../components/Tarif';
 
 function Fastfood() {
+	const tarifs = [
+		{ title: 'Фастфуд.Помесячный', price: 7500, qtyMonths: 'месяц' },
+		{ title: 'Фастфуд.Годовой', price: 65000, qtyMonths: '12 месяцев' },
+	];
+
 	return (
 		<>
 			<Hero
@@ -50,6 +56,19 @@ function Fastfood() {
 							</span>
 						</div>
 					</div>
+				</div>
+
+				<div className='text-center text-3xl lg:text-5xl mb-5 font-black mt-10'>
+					<span>Доступные тарифы</span>
+				</div>
+				<div className='flex flex-col items-center sm:flex-row sm:justify-center sm:items-center'>
+					{tarifs.map((obj) => (
+						<Tarif
+							title={obj.title}
+							price={obj.price}
+							qtyMonths={obj.qtyMonths}
+						/>
+					))}
 				</div>
 			</div>
 		</>

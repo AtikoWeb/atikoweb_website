@@ -6,9 +6,13 @@ import Tarif from '../../components/Tarif';
 
 function Restaurant() {
 	const tarifs = [
-		{ title: 'Квартальный', price: 40000, qtyMonths: '3 месяца' },
-		{ title: 'Полугодовой', price: 80000, qtyMonths: '6 месяцев' },
-		{ title: 'Полугодовой', price: 120000, qtyMonths: '12 месяцев' },
+		{ title: 'Ресторан/Кафе.Квартальный', price: 40000, qtyMonths: '3 месяца' },
+		{
+			title: 'Ресторан/Кафе.Полугодовой',
+			price: 80000,
+			qtyMonths: '6 месяцев',
+		},
+		{ title: 'Ресторан/Кафе.Годовой', price: 120000, qtyMonths: '12 месяцев' },
 	];
 	return (
 		<>

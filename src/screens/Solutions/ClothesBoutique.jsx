@@ -6,8 +6,8 @@ import Tarif from '../../components/Tarif';
 
 function ClothesBoutique() {
 	const tarifs = [
-		{ title: 'Помесячный', price: 7500, qtyMonths: 'месяц' },
-		{ title: 'Годовой', price: 65000, qtyMonths: '12 месяцев' },
+		{ title: 'Бутик одежды.Помесячный', price: 7500, qtyMonths: 'месяц' },
+		{ title: 'Бутик одежды.Годовой', price: 65000, qtyMonths: '12 месяцев' },
 	];
 
 	return (

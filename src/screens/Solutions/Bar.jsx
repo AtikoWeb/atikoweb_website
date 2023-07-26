@@ -6,8 +6,8 @@ import Tarif from '../../components/Tarif';
 
 function Bar() {
 	const tarifs = [
-		{ title: 'Помесячный', price: 7500, qtyMonths: 'месяц' },
-		{ title: 'Годовой', price: 65000, qtyMonths: '12 месяцев' },
+		{ title: 'Бар.Помесячный', price: 7500, qtyMonths: 'месяц' },
+		{ title: 'Бар.Годовой', price: 65000, qtyMonths: '12 месяцев' },
 	];
 
 	return (

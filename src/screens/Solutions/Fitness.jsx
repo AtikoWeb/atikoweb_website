@@ -6,9 +6,9 @@ import Tarif from '../../components/Tarif';
 
 function Fitness() {
 	const tarifs = [
-		{ title: 'Квартальный', price: 55000, qtyMonths: '3 месяца' },
-		{ title: 'Полугодовой', price: 110000, qtyMonths: '6 месяцев' },
-		{ title: 'Полугодовой', price: 150000, qtyMonths: '12 месяцев' },
+		{ title: 'Фитнес.Квартальный', price: 55000, qtyMonths: '3 месяца' },
+		{ title: 'Фитнес.Полугодовой', price: 110000, qtyMonths: '6 месяцев' },
+		{ title: 'Фитнес.Годовой', price: 150000, qtyMonths: '12 месяцев' },
 	];
 	return (
 		<>

@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
+import CallBackForm from './CallBackForm';
 
 function Tarif({ title, price = 0, qtyMonths }) {
+	const [isOpen, setIsOpen] = useState();
 	return (
 		<>
 			<div className='w-full max-w-sm p-4 m-5 bg-base-100 border border-gray-200 rounded-lg shadow sm:p-8 dark:border-gray-700 sm:w-full sm:max-w-sm'>
@@ -94,10 +96,17 @@ function Tarif({ title, price = 0, qtyMonths }) {
 				<button
 					type='button'
 					className='btn btn-primary btn-block normal-case text-lg'
+					onClick={() => setIsOpen(true)}
 				>
 					Выбрать
 				</button>
 			</div>
+
+			<CallBackForm
+				open={isOpen}
+				onClose={() => setIsOpen(false)}
+				tarif={title}
+			/>
 		</>
 	);
 }

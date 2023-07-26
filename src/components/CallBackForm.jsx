@@ -1,30 +1,56 @@
 import { useRef, useState, Fragment } from 'react';
-import sgMail from '@sendgrid/mail';
+import axios from 'axios';
 import { Transition, Dialog } from '@headlessui/react';
 import { IoCloseCircleSharp } from 'react-icons/io5';
+import { AsYouType } from 'libphonenumber-js';
 
-sgMail.setApiKey(
-	'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'
-);
-
-export default function CallBackForm({ open = false, onClose }) {
+export default function CallBackForm({ open = false, onClose, tarif = '' }) {
 	const [name, setName] = useState('');
 	const [phone, setPhone] = useState('');
-	const [email, setEmail] = useState('');
 	const cancelButtonRef = useRef(null);
 
-	const handleSubmit = async (e) => {
+	const htmlBody = `
+
+        <div style="width: 100%; max-width: 20rem; padding: 4rem; margin: auto; border-radius: 1rem; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); background-color: #F3F4F6;">
+            <div style="display: flex; flex-direction: column; align-items: center; margin: auto;">
+               <span style="font-size: 100px">☎️</span>
+                <h1 style="margin-bottom: 0.25rem; font-weight: semibold; color: #111827;">${name}</h1>
+                <h2 style="color: #6B7280; text-decoration: none">${phone}</h2>
+				${
+					tarif.length === 0
+						? ' '
+						: `<h2 style="color: #111827; text-decoration: none">${tarif}</h2>`
+				}
+				 
+            </div>
+        </div>
+`;
+
+	const sendFormData = async () => {
+		try {
+			const response = await axios.post('http://192.168.0.121:8888/mail', {
+				subject: 'Новая заявка', // Тема письма
+				html: htmlBody, // Тело письма в формате HTML
+			});
+
+			if (response.status === 200) {
+				console.log('Письмо успешно отправлено');
+				// Добавьте здесь любую дополнительную обработку при успешной отправке
+			} else {
+				console.log('Ошибка при отправке письма');
+				// Добавьте здесь любую обработку ошибки при отправке
+			}
+		} catch (error) {
+			console.error('Ошибка при отправке данных', error);
+			// Добавьте здесь обработку ошибки при общении с сервером
+		}
+	};
+
+	const handleSubmit = (e) => {
 		e.preventDefault();
 
 		try {
-			const msg = {
-				to: 'timmy.shiyanov@gmail.com', // Ваш email
-				from: 'dev.atikoweb@gmail.com', // Ваш SendGrid Sender
-				subject: 'Новая заявка',
-				text: `Имя: ${name}\nТелефон: ${phone}`,
-			};
-
-			await sgMail.send(msg);
+			sendFormData(); // Вызов функции отправки данных
 			setName('');
 			setPhone('');
 			onClose();
@@ -32,6 +58,15 @@ export default function CallBackForm({ open = false, onClose }) {
 			console.error('Ошибка при отправке данных', error);
 		}
 	};
+
+	const handlePhoneInput = (e) => {
+		const phoneNumber = e.target.value;
+		const asYouType = new AsYouType('KZ');
+		const formattedPhoneNumber = asYouType.input(phoneNumber); // Форматируем вводимое значение
+
+		setPhone(formattedPhoneNumber); // Сохраняем отформатированное значение в state
+	};
+
 	return (
 		<Transition.Root
 			show={open}
@@ -92,7 +127,7 @@ export default function CallBackForm({ open = false, onClose }) {
 										onChange={(e) => setName(e.target.value)}
 									/>
 								</div>
-								<div>
+								<div className='mb-5'>
 									<label
 										for='phone'
 										className='block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300'
@@ -105,25 +140,25 @@ export default function CallBackForm({ open = false, onClose }) {
 										className='shadow-sm bg-black/[.1]  text-gray-900 text-[16px] rounded-lg  block w-full p-2.5 dark:bg-white/[.1] dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:shadow-sm-light'
 										placeholder='+7 777 77-77'
 										value={phone}
-										onChange={(e) => setPhone(e.target.value)}
+										onInput={handlePhoneInput}
 									/>
 								</div>
-								<div className='mt-5'>
-									<label
-										for='phone'
-										className='block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300'
-									>
-										Email
-									</label>
-									<input
-										type='email'
-										id='email'
-										className='shadow-sm bg-black/[.1] border-gray-300 text-gray-900 text-[16px] rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-white/[.1] dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light'
-										placeholder='example@mail.ru'
-										value={email}
-										onChange={(e) => setEmail(e.target.value)}
-									/>
-								</div>
+								{tarif.length === 0 ? (
+									''
+								) : (
+									<div>
+										<label
+											for='phone'
+											className='block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300'
+										>
+											Тариф
+										</label>
+										<div className='shadow-sm bg-black/[.1]  text-gray-900 text-[16px] rounded-lg  block w-full p-2.5 dark:bg-white/[.1] dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:shadow-sm-light'>
+											{tarif}
+										</div>
+									</div>
+								)}
+
 								<div className='flex justify-center mt-8'>
 									<button
 										type='submit'

@@ -6,9 +6,9 @@ import Tarif from '../../components/Tarif';
 
 function CoffeeHouse() {
 	const tarifs = [
-		{ title: 'Квартальный', price: 40000, qtyMonths: '3 месяца' },
-		{ title: 'Полугодовой', price: 80000, qtyMonths: '6 месяцев' },
-		{ title: 'Полугодовой', price: 120000, qtyMonths: '12 месяцев' },
+		{ title: 'Кофейня.Квартальный', price: 40000, qtyMonths: '3 месяца' },
+		{ title: 'Кофейня.Полугодовой', price: 80000, qtyMonths: '6 месяцев' },
+		{ title: 'Кофейня.Годовой', price: 120000, qtyMonths: '12 месяцев' },
 	];
 	return (
 		<>
