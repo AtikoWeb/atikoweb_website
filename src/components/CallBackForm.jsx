@@ -101,7 +101,7 @@ export default function CallBackForm({ open = false, onClose, tarif = '' }) {
 							leaveFrom='opacity-100 translate-y-0 sm:scale-100'
 							leaveTo='opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95'
 						>
-							<Dialog.Panel className='relative transform w-screen p-12 overflow-hidden rounded-3xl backdrop-blur-2xl bg-white/[.6] dark:bg-[#1D222A]/[.8] text-left shadow-2xl transition-all sm:my-8 sm:w-full sm:max-w-lg'>
+							<Dialog.Panel className='relative transform w-screen p-12 overflow-hidden md:rounded-3xl rounded-t-3xl backdrop-blur-2xl bg-white/[.6] dark:bg-[#1D222A]/[.8] text-left shadow-2xl transition-all sm:my-8 sm:w-full sm:max-w-lg'>
 								<div
 									className='absolute right-2 top-2 btn btn-ghost btn-circle'
 									onClick={onClose}
