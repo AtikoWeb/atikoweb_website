@@ -22,7 +22,7 @@ function Footer() {
 							className='btn btn-lg w-24 h-20 md:w-36 md:h-32 bg-green-500 hover:bg-green-600 rounded-xl mx-3 md:mx-5'
 							href='https://wa.me/+77086001010?text=Здравствуйте! Хочу задать вопрос об автоматизации'
 						>
-							<IoLogoWhatsapp className='text-4xl md:text-6xl text-base-100' />
+							<IoLogoWhatsapp className='text-4xl md:text-6xl text-white' />
 						</a>
 						<a
 							className='btn btn-lg w-24 h-20 md:w-36 md:h-32 bg-gradient-to-bl from-fuchsia-500 via-red-600 to-orange-400 hover:from-fuchsia-600 hover:via-red-500 hover:to-orange-500 rounded-xl mx-3 md:mx-5'
