@@ -18,6 +18,10 @@ import 'react-modern-drawer/dist/index.css';
 import CategoryCard from './CategoryCard';
 import Logo from './Logo';
 import { Link } from 'react-router-dom';
+import { FaPhoneAlt } from 'react-icons/fa';
+import { IoLogoWhatsapp } from 'react-icons/io';
+import { AiFillInstagram } from 'react-icons/ai';
+import { FcDocument } from 'react-icons/fc';
 
 function Navbar() {
 	const [hasShadow, setHasShadow] = useState(false);
@@ -31,6 +35,7 @@ function Navbar() {
 	useEffect(() => {
 		const handleScroll = () => {
 			const scrollPosition = window.scrollY;
+
 			if (scrollPosition > 0) {
 				setHasShadow(true);
 			} else {
@@ -131,13 +136,13 @@ function Navbar() {
 					direction='right'
 					size={isMobile ? '100%' : '40%'}
 				>
-					<div className='bg-base-100 h-screen pt-3'>
+					<div className='bg-base-100 pt-3 overflow-y-scroll h-[98vh]'>
 						<div className='mx-5 flex justify-between mb-3'>
 							<span className='text-xl lg:text-2xl pt-10 font-bold text-gray-400 mt-3'>
 								Типы бизнеса
 							</span>
 							<div
-								className='absolute right-2 top-2 btn btn-ghost btn-circle'
+								className='btn btn-ghost btn-circle'
 								onClick={toggleDrawer}
 							>
 								<IoCloseCircleSharp
@@ -158,7 +163,7 @@ function Navbar() {
 							))}
 						</div>
 
-						<div className='mx-5 mt-5'>
+						<div className='mx-5 mt-5 mb-5'>
 							<hr className='border-gray-400' />
 							<Link
 								to='https://online.atikoweb.ru'
@@ -167,6 +172,60 @@ function Navbar() {
 							>
 								Войти
 							</Link>
+						</div>
+
+						<span className='text-xl lg:text-2xl pt-10 font-bold text-gray-400 mt-3 mx-5'>
+							Контакты
+						</span>
+						<div className='grid grid-cols-3 gap-3 mx-5 mt-3 mb-5'>
+							<a
+								className='btn btn-lg normal-case relative'
+								href='tel:+77086001010'
+							>
+								<FaPhoneAlt className='text-4xl' />
+							</a>
+							<a
+								className='btn btn-lg normal-case relative text-white bg-green-500 hover:bg-green-600'
+								href='https://wa.me/+77086001010?text=Здравствуйте! Хочу задать вопрос об автоматизации'
+							>
+								<IoLogoWhatsapp className='text-4xl' />
+							</a>
+							<a
+								className='btn btn-lg normal-case text-white relative bg-gradient-to-bl from-fuchsia-500 via-red-600 to-orange-400 hover:from-fuchsia-600 hover:via-red-500 hover:to-orange-500'
+								href='https://www.instagram.com/atiko_web/'
+							>
+								<AiFillInstagram className='text-4xl' />
+							</a>
+						</div>
+						<span className='text-xl lg:text-2xl pt-10 font-bold text-gray-400 mt-3 mx-5'>
+							Документы
+						</span>
+						<div class='max-w-md space-y-3 mx-5 text-lg mt-3'>
+							<a
+								class='flex btn-link text-gray-800 hover:text-gray-500'
+								href='/refund.html'
+							>
+								<FcDocument className='mx-1 text-3xl' /> Политика возврата
+							</a>
+							<a
+								class='flex btn-link text-gray-800 hover:text-gray-500'
+								href='/privacy-policy.html'
+							>
+								<FcDocument className='mx-1 text-3xl' /> Политика
+								конфиденциальности
+							</a>
+							<a
+								class='flex btn-link text-gray-800 hover:text-gray-500'
+								href='/dogovor-oferta.html'
+							>
+								<FcDocument className='mx-1 text-3xl' /> Договор оферты
+							</a>
+							<a
+								class='flex btn-link text-gray-800 hover:text-gray-500'
+								href='/requisites.html'
+							>
+								<FcDocument className='mx-1 text-3xl' /> Реквизиты
+							</a>
 						</div>
 					</div>
 				</Drawer>
