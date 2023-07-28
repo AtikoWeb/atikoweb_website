@@ -3,53 +3,106 @@ import axios from 'axios';
 import { Transition, Dialog } from '@headlessui/react';
 import { IoCloseCircleSharp } from 'react-icons/io5';
 import { AsYouType } from 'libphonenumber-js';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function CallBackForm({ open = false, onClose, tarif = '' }) {
 	const [name, setName] = useState('');
 	const [phone, setPhone] = useState('');
+	const [city, setCity] = useState('');
 	const cancelButtonRef = useRef(null);
+
+	const showErrorToast = (message) => {
+		toast.warning(message, {
+			position: 'top-center',
+			autoClose: 3000,
+			className: 'rounded-xl bg-base-100',
+		});
+	};
 
 	const htmlBody = `
 
-        <div style="width: 100%; max-width: 20rem; padding: 4rem; margin: auto; border-radius: 1rem; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); background-color: #F3F4F6;">
-            <div style="display: flex; flex-direction: column; align-items: center; margin: auto;">
-               <span style="font-size: 100px">☎️</span>
-                <h1 style="margin-bottom: 0.25rem; font-weight: semibold; color: #111827;">${name}</h1>
-                <h2 style="color: #6B7280; text-decoration: none">${phone}</h2>
-				${
-					tarif.length === 0
-						? ' '
-						: `<h2 style="color: #111827; text-decoration: none">${tarif}</h2>`
-				}
-				 
-            </div>
-        </div>
+		
+			<div
+				style="
+					width: 100%;
+					max-width: 20rem;
+					padding: 1rem;
+					margin: auto;
+					border-radius: 1rem;
+					box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+					background-color: #f3f4f6;
+				"
+			>
+				<div
+					style="
+						display: flex;
+						flex-direction: column;
+						margin: auto;
+						text-align: center;
+					"
+				>
+					<div style="display: flex; justify-content: center">
+						<span style="font-size: 100px">☎️</span>
+					</div>
+					<h1 style="font-weight: bold; color: #2d2d2e; font-size: x-large">
+						${name}
+					</h1>
+					<h2 style="font-weight: bold; color: #858586; flex-decoration: none">${phone}</h2>
+					${tarif ? `<h2 style="font-weight: bold; color: #858586">${tarif}</h2>` : ''}
+					
+
+					<h2 style="font-weight: bold; color: #2d2d2e">${city}</h2>
+				</div>
+			</div>
+	
+       
 `;
 
-	const sendFormData = async () => {
-		try {
-			const response = await axios.post('http://192.168.0.121:8888/mail', {
-				subject: 'Новая заявка', // Тема письма
-				html: htmlBody, // Тело письма в формате HTML
-			});
+	const sendFormData = () => {
+		return new Promise(async (resolve, reject) => {
+			try {
+				const response = await axios.post('http://192.168.0.121:8888/mail', {
+					subject: 'Новая заявка', // Тема письма
+					html: htmlBody, // Тело письма в формате HTML
+				});
 
-			if (response.status === 200) {
-				console.log('Письмо успешно отправлено');
-				// Добавьте здесь любую дополнительную обработку при успешной отправке
-			} else {
-				console.log('Ошибка при отправке письма');
-				// Добавьте здесь любую обработку ошибки при отправке
+				if (response.status === 200) {
+					console.log('Письмо успешно отправлено');
+					resolve(response.data); // Письмо успешно отправлено, разрешаем промис
+				} else {
+					console.log('Ошибка при отправке письма');
+					reject(new Error('Ошибка при отправке письма')); // Ошибка при отправке, отклоняем промис
+				}
+			} catch (error) {
+				console.error('Ошибка при отправке данных', error);
+				reject(error); // Ошибка при общении с сервером, отклоняем промис
 			}
-		} catch (error) {
-			console.error('Ошибка при отправке данных', error);
-			// Добавьте здесь обработку ошибки при общении с сервером
-		}
+		});
 	};
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
 
 		try {
+			if (!name) {
+				return showErrorToast('Введите свое имя!');
+			}
+
+			if (!phone) {
+				return showErrorToast('Введите свой телефон!');
+			}
+
+			if (!city) {
+				return showErrorToast('Введите свой город!');
+			}
+
+			toast.promise(sendFormData(), {
+				pending: 'Отправка данных...', // Загрузка, пока промис ожидает выполнения
+				success: 'Письмо успешно отправлено!', // Промис выполнен успешно
+				error: 'Ошибка при отправке письма!', // Промис был отклонен
+			});
+
 			sendFormData(); // Вызов функции отправки данных
 			setName('');
 			setPhone('');
@@ -146,18 +199,34 @@ export default function CallBackForm({ open = false, onClose, tarif = '' }) {
 								{tarif.length === 0 ? (
 									''
 								) : (
-									<div>
+									<div className='mb-5'>
 										<label
 											for='phone'
 											className='block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300'
 										>
 											Тариф
 										</label>
-										<div className='shadow-sm bg-black/[.1]  text-gray-900 text-[16px] rounded-lg  block w-full p-2.5 dark:bg-white/[.1] dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:shadow-sm-light'>
+										<div className='shadow-sm bg-black/[.1] text-gray-900 text-[16px] rounded-lg  block w-full p-2.5 dark:bg-white/[.1] dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:shadow-sm-light'>
 											{tarif}
 										</div>
 									</div>
 								)}
+
+								<div>
+									<label
+										for='city'
+										className='block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300'
+									>
+										Город
+									</label>
+									<input
+										id='city'
+										className='shadow-sm bg-black/[.1]  text-gray-900 text-[16px] rounded-lg  block w-full p-2.5 dark:bg-white/[.1] dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:shadow-sm-light'
+										placeholder='Ваш город'
+										value={city}
+										onChange={(e) => setCity(e.target.value)}
+									/>
+								</div>
 
 								<div className='flex justify-center mt-8'>
 									<button
