@@ -35,6 +35,7 @@ function Navbar() {
 	useEffect(() => {
 		const handleScroll = () => {
 			const scrollPosition = window.scrollY;
+			document.body.style.overflowY = isOpen ? 'hidden' : 'auto';
 
 			if (scrollPosition > 0) {
 				setHasShadow(true);
@@ -135,8 +136,9 @@ function Navbar() {
 					onClose={toggleDrawer}
 					direction='right'
 					size={isMobile ? '100%' : '40%'}
+					style={{ overflow: 'scroll' }}
 				>
-					<div className='bg-base-100 pt-3 overflow-y-scroll h-[98vh]'>
+					<div className='bg-base-100 pt-3 pb-28'>
 						<div className='mx-5 flex justify-between mb-3'>
 							<span className='text-xl lg:text-2xl pt-10 font-bold text-gray-400 mt-3'>
 								Типы бизнеса
@@ -202,26 +204,26 @@ function Navbar() {
 						</span>
 						<div class='max-w-md space-y-3 mx-5 text-lg mt-3'>
 							<a
-								class='flex btn-link text-gray-800 hover:text-gray-500'
+								class='flex btn-link text-gray-800 hover:text-gray-500 dark:text-gray-300 dark:hover:text-gray-400'
 								href='/refund.html'
 							>
 								<FcDocument className='mx-1 text-3xl' /> Политика возврата
 							</a>
 							<a
-								class='flex btn-link text-gray-800 hover:text-gray-500'
+								class='flex btn-link text-gray-800 hover:text-gray-500 dark:text-gray-300 dark:hover:text-gray-400'
 								href='/privacy-policy.html'
 							>
 								<FcDocument className='mx-1 text-3xl' /> Политика
 								конфиденциальности
 							</a>
 							<a
-								class='flex btn-link text-gray-800 hover:text-gray-500'
+								class='flex btn-link text-gray-800 hover:text-gray-500 dark:text-gray-300 dark:hover:text-gray-400'
 								href='/dogovor-oferta.html'
 							>
 								<FcDocument className='mx-1 text-3xl' /> Договор оферты
 							</a>
 							<a
-								class='flex btn-link text-gray-800 hover:text-gray-500'
+								class='flex btn-link text-gray-800 hover:text-gray-500 dark:text-gray-300 dark:hover:text-gray-400'
 								href='/requisites.html'
 							>
 								<FcDocument className='mx-1 text-3xl' /> Реквизиты
